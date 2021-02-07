@@ -44,7 +44,7 @@ bool Filter::check_string(const std::string &string_to_check) const {
     if (type == EMPTY) {
         return true;
     }
-    bool finded = sub_string_find(sub_str, string_to_check)
+    bool finded = sub_string_find(sub_string, check);
     if (type == NOT_IN) {
         return !finded;
     }
@@ -90,21 +90,21 @@ std::string Filter::str_to_lower(const std::string &str) const {
 }
 
 bool sub_string_find(const std::string &sub_str, const std::string &str) {
-    std::string s = sub_str + "\n" + str; // \n as a split symbol because it's guarantied not to be in sub_str and str
-    std::std::vector<size_t> prefix(s.size());
+    std::string s(sub_str + '\n' + str); // \n as a split symbol because it's guarantied not to be in sub_str and str
+    std::vector<size_t> prefix(s.size());
     prefix[0] = 0;
     for (size_t i = 1; i < prefix.size(); i++) {
-        int k = p[i - 1];
+        int k = prefix[i - 1];
         while (k > 0 && s[i] != s[k]) {
             k = prefix[k - 1];
         }
         if (s[i] == s[k]) {
           k++;
         }
-        p[i] = k;
-        if(p[i] == sub_str.size()) {
+        prefix[i] = k;
+        if (k == sub_str.size()) {
           return true;
         }
-        return false;
     }
+    return false;
 }
