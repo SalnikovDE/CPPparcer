@@ -34,21 +34,21 @@ Filter::Filter(const std::string &expression) {
 }
 
 /* Checks if string satisfy the filter condition */
-bool Filter::check_string(const std::string &sting_to_check) const {
+bool Filter::check_string(const std::string &string_to_check) const {
     std::string check;
     if (!case_sensetive) {
-        check = str_to_lower(sting_to_check);
+        check = str_to_lower(string_to_check);
     } else {
-        check = sting_to_check;
+        check = string_to_check;
     }
     if (type == EMPTY) {
         return true;
     }
-    auto pos = check.find(sub_string);
+    bool finded = sub_string_find(sub_str, string_to_check)
     if (type == NOT_IN) {
-        return pos == std::string::npos;
+        return !finded;
     }
-    return pos != std::string::npos;
+    return finded;
 }
 
 /* Strictness is a relation of order on filters. The "strictest" filter should exclude the most string.
@@ -87,4 +87,24 @@ std::string Filter::str_to_lower(const std::string &str) const {
         ret += c;
     }
     return ret;
+}
+
+bool sub_string_find(const std::string &sub_str, const std::string &str) {
+    std::string s = sub_str + "\n" + str; // \n as a split symbol because it's guarantied not to be in sub_str and str
+    std::std::vector<size_t> prefix(s.size());
+    prefix[0] = 0;
+    for (size_t i = 1; i < prefix.size(); i++) {
+        int k = p[i - 1];
+        while (k > 0 && s[i] != s[k]) {
+            k = prefix[k - 1];
+        }
+        if (s[i] == s[k]) {
+          k++;
+        }
+        p[i] = k;
+        if(p[i] == sub_str.size()) {
+          return true;
+        }
+        return false;
+    }
 }
