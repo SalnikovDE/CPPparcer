@@ -9,6 +9,8 @@
 #ifndef PARSER_FILTER_H
 #define PARSER_FILTER_H
 
+bool sub_string_find(const std::string &sub_str, const std::string &str);
+
 /*
   Class used to check and contain filters.
 */
