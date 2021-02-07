@@ -30,7 +30,8 @@ const Filter *FilterCollection::get_max_filter() {
     return &(*filters.rbegin());
 }
 
-// Returns pointer to the next filter. Increments iterator;
+// Returns pointer to the next filter. Increments iterator.
+// Returns nulptr when finishes;
 const Filter *FilterCollection::get_next_filter() {
     if (current_iterator != filters.rend()) {
         return &(*current_iterator++);

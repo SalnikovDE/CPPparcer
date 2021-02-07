@@ -16,6 +16,9 @@ int FileHandler::filter_file() {
     if (!output_stream.is_open()) {
         return -2;
     }
+    /*
+      Cheking every string with filter in order of decreasing strictness.
+    */
     std::string line;
     while(std::getline(input_stream, line, '\n')) {
         filters.reset();
@@ -38,5 +41,3 @@ int FileHandler::filter_file() {
 
     return 0;
 }
-
-

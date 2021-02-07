@@ -77,6 +77,7 @@ bool operator<(const Filter &a, const Filter &b) {
     return false;
 }
 
+// Needed to check not case sensetive filter.
 std::string Filter::str_to_lower(const std::string &str) const {
     std::string ret;
     for (auto c : str) {

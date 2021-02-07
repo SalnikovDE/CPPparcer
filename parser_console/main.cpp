@@ -9,8 +9,15 @@
 
 int main(int argc, char const *argv[]) {
     Params params;
-    if (params.params_load("config") != 0) {
-        std::cout << "Config file error.";
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    int err = 0;
+    if ((err = params.params_load("config")) != 0) {
+        if (err == -1) {
+          std::cout << "Cannot open config files" << std::endl;
+        } else if (err == -2) {
+          std::cout << "Wrong config format" << std::endl;
+        }
         return -1;
     }
 
@@ -19,9 +26,14 @@ int main(int argc, char const *argv[]) {
         std::cout << "Filters loading error.";
     };
 
-    FileHandler(params, filters).filter_file();
+    if ((err = FileHandler(params, filters).filter_file()) != 0) {
+        if (err == -1) {
+          std::cout << "Input file error" << std::endl;
+        }
+        if (err == -2) {
+          std::cout << "Output file error" << std::endl;
+        }
+    }
 
     return 0;
 }
-
-
