@@ -9,8 +9,6 @@
 
 int main(int argc, char const *argv[]) {
     Params params;
-    std::ios_base::sync_with_stdio(false); // fast C++ in/output
-    std::cin.tie(NULL);
     int err = 0;
     if ((err = params.params_load("config")) != 0) {
         if (err == -1) {
